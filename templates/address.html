@@ -1,0 +1,24 @@
+{% extends "welcome.html" %}
+{% block content %}
+
+<div class="card" style="max-width:500px; margin:auto;">
+
+<h2>Delivery Address</h2>
+
+<form method="POST">
+
+<input name="name" placeholder="Full Name">
+<input name="phone" placeholder="Phone">
+<textarea name="address" placeholder="Address"></textarea>
+<input name="city" placeholder="City">
+<input name="pincode" placeholder="Pincode">
+
+<button class="btn success" style="width:100%;">
+Continue to Checkout
+</button>
+
+</form>
+
+</div>
+
+{% endblock %}

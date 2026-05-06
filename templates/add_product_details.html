@@ -1,0 +1,63 @@
+{% extends "welcome.html" %}
+
+{% block title %}Add Product{% endblock %}
+
+{% block content %}
+
+<div style="display:flex; justify-content:center; align-items:center; height:90vh;">
+
+    <div style="
+        background-color:rgb(213, 247, 242);
+        padding:30px;
+        border-radius:10px;
+        width:400px;
+        box-shadow:0 0 15px rgba(0,0,0,0.1);
+    ">
+
+        <h2 style="text-align:center; margin-bottom:20px;">Add Product</h2>
+
+        <form action="{{ url_for('add_details_form') }}" method="POST" enctype="multipart/form-data">
+
+            <!-- Product Name -->
+            <label>Product Name</label>
+            <input type="text" name="name" required
+                   style="width:100%; padding:8px; margin:8px 0 15px; border:1px solid #ccc; border-radius:5px;">
+
+            <!-- Price -->
+            <label>Price</label>
+            <input type="number" name="price" required
+                   style="width:100%; padding:8px; margin:8px 0 15px; border:1px solid #ccc; border-radius:5px;">
+            
+            <!-- Category -->
+            <label>Category</label>
+            <input type="text" name="category" required
+                   style="width:100%; padding:8px; margin:8px 0 15px; border:1px solid #ccc; border-radius:5px;">
+
+            <!-- Quantity -->
+            <label>Quantity</label>
+            <input type="number" name="quantity" min="1" required
+                   style="width:100%; padding:8px; margin:8px 0 15px; border:1px solid #ccc; border-radius:5px;">
+
+            <!-- Details -->
+            <label>Product Details</label>
+            <textarea name="details" rows="4" required
+                      style="width:100%; padding:8px; margin:8px 0 15px; border:1px solid #ccc; border-radius:5px;"></textarea>
+
+            <!-- Multiple Images -->
+            <label>Upload Product Images</label>
+            <input type="file" name="images[]" multiple required
+                   style="width:100%; padding:8px; margin:8px 0 20px;">
+
+            <!-- Submit -->
+            <button type="submit"
+                    style="width:100%; background-color:green; color:white; padding:10px; border:none; border-radius:5px;">
+                Add Product
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,129 @@
+{% extends "welcome.html" %}
+{% block title %}Payment{% endblock %}
+
+{% block content %}
+
+<style>
+.payment-container {
+    display:flex;
+    gap:30px;
+    align-items:stretch;
+}
+
+/* LEFT */
+.summary {
+    flex:1;
+    background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+    padding:25px;
+    border-radius:12px;
+}
+
+.summary h2 {
+    margin-bottom:15px;
+}
+
+.amount {
+    font-size:30px;
+    color:#16a34a;
+    margin-top:10px;
+}
+
+/* RIGHT */
+.pay-box {
+    flex:1;
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* BUTTON */
+.pay-btn {
+    background:#16a34a;
+    color:white;
+    padding:14px 25px;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.pay-btn:hover {
+    transform:scale(1.05);
+}
+</style>
+
+<div class="payment-container">
+
+<!-- LEFT SIDE -->
+<div class="summary">
+    <h2>Order Summary</h2>
+
+    <p><strong>Name:</strong> {{ name }}</p>
+    <p><strong>Email:</strong> {{ user_email }}</p>
+
+    <p>Total Amount:</p>
+    <div class="amount">₹{{ amount // 100 }}</div>
+
+    <p style="margin-top:15px; color:#555;">
+        Secure payment powered by Razorpay.
+    </p>
+</div>
+
+<!-- RIGHT SIDE -->
+<div class="pay-box">
+    <h2>Complete Payment</h2>
+
+    <button id="pay-btn" class="pay-btn">Pay Now</button>
+
+    <form id="payment-form" action="{{ url_for('payment_success') }}" method="POST">
+        <input type="hidden" name="razorpay_order_id" id="razorpay_order_id">
+        <input type="hidden" name="razorpay_payment_id" id="razorpay_payment_id">
+        <input type="hidden" name="razorpay_signature" id="razorpay_signature">
+    </form>
+
+    <p style="margin-top:15px; color:gray;">100% Secure Payment</p>
+</div>
+
+</div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+var options = {
+    "key": "{{ key_id }}",
+    "amount": "{{ amount }}",
+    "currency": "INR",
+    "name": "Ecom",
+    "description": "Secure Payment",
+    "order_id": "{{ order_id }}",
+
+    "handler": function (response) {
+        document.getElementById("razorpay_payment_id").value = response.razorpay_payment_id;
+        document.getElementById("razorpay_order_id").value = response.razorpay_order_id;
+        document.getElementById("razorpay_signature").value = response.razorpay_signature;
+        document.getElementById("payment-form").submit();
+    },
+
+    "prefill": {
+        "name": "{{ name }}",
+        "email": "{{ user_email }}"
+    }
+};
+
+var rzp = new Razorpay(options);
+
+document.getElementById("pay-btn").onclick = function(e){
+    rzp.open();
+    e.preventDefault();
+}
+</script>
+
+<div style="text-align:center; margin-top:20px;">
+    <a href="{{ url_for('user_dashboard') }}" class="btn primary">
+        ⬅ Back to Dashboard
+    </a>
+</div>
+
+{% endblock %}

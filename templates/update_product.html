@@ -1,0 +1,42 @@
+{% extends "welcome.html" %} 
+ 
+{% block title %}Update Product{% endblock %} 
+ 
+{% block content %} 
+ 
+<h2>Update Product - {{ product.product }}</h2> 
+ 
+<form method="POST" enctype="multipart/form-data"> 
+ 
+    <!-- 🔹 PRICE UPDATE --> 
+    <label>Price:</label> 
+    <input type="number" name="price" value="{{ product.price }}" required><br><br> 
+ 
+    <!-- 🔥 EXISTING IMAGES --> 
+    <h3>Existing Images</h3> 
+ 
+    {% for img in images %} 
+        <div> 
+            <img src="{{ url_for('static', filename='images/' + product.product_id + '/' + img) }}" width="100"> 
+ 
+            <!-- checkbox to delete --> 
+            <input type="checkbox" name="delete_images" value="{{ img }}"> 
+            Delete 
+        </div> 
+    {% endfor %} 
+ 
+    <br> 
+ 
+    <!-- 🔥 ADD NEW IMAGES --> 
+    <h3>Add New Images</h3> 
+    <input type="file" name="new_images" multiple> 
+ 
+    <br><br> 
+ 
+    <button type="submit" style="background:green; color:white; padding:10px;"> 
+        Update Product 
+    </button> 
+ 
+</form> 
+ 
+{% endblock %}

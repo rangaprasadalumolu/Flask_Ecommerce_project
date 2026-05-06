@@ -1,0 +1,29 @@
+{% extends "welcome.html" %}
+{% block content %}
+
+<div style="display:flex; gap:40px;">
+
+<div style="width:40%;">
+    <img id="mainImage" src="{{ url_for('static', filename=images[0]) }}" style="width:100%; border-radius:10px;">
+</div>
+
+<div style="width:60%;">
+    <h2>{{ product.product }}</h2>
+    <h3 style="color:green;">₹{{ product.price }}</h3>
+
+    <p>{{ product.product_details }}</p>
+
+    <form action="{{ url_for('add_to_cart') }}" method="POST">
+        <input type="hidden" name="product_id" value="{{ product.product_id }}">
+        <button class="btn warning">Add to Cart</button>
+    </form>
+
+    <form action="{{ url_for('address') }}" method="GET" style="margin-top:10px;">
+        <input type="hidden" name="product_id" value="{{ product.product_id }}">
+        <button class="btn success">Buy Now</button>
+    </form>
+</div>
+
+</div>
+
+{% endblock %}

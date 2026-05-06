@@ -1,0 +1,117 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Ecom.in - Welcome{% endblock %}</title>
+
+    <style>
+        * { box-sizing: border-box; }
+
+        /*  lock page to screen (without  movement with cursor) */
+        html, body {
+            margin: 0;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e0f7fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #00838f;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            background-color: #b2ebf2;
+            flex: 1;
+        }
+
+        .hero h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .admin-btn {
+            background-color: #ff7043;
+            color: white;
+        }
+
+        .user-btn {
+            background-color: #43a047;
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.85;
+        }
+
+        footer {
+            background-color: #004d40;
+            color: white;
+            text-align: center;
+            padding: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div align="left">
+        Ecom.in
+    </div>
+</header>
+
+<div class="hero">
+
+
+    {% block content %}
+
+    <h1>Welcome to Ecom.in</h1>
+    <p>Your one-stop shop for all products</p>
+    <form action="/admin" style="display:inline;">
+        <button class="btn admin-btn">Admin Login</button>
+    </form>
+
+    <form action="/user" style="display:inline;">
+        <button class="btn user-btn">User Login</button>
+    </form>
+
+    {{password}}
+    {% endblock %}
+</div>
+
+{% block footer %}
+<footer>
+    © 2026 Ecom.in | All Rights Reserved
+</footer>
+{% endblock %}
+
+</body>
+</html>

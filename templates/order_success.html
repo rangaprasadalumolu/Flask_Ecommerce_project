@@ -1,0 +1,24 @@
+{% extends "welcome.html" %} 
+{% block title %}Order Confirmed{% endblock %} 
+ 
+{% block content %} 
+<div style="text-align: center; padding: 50px; background: white; border-radius: 15px; max-width: 600px; margin: auto; margin-top: 50px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"> 
+    <h1 style="color: #28a745;">🎉 Success!</h1> 
+    <p style="font-size: 18px;">Your order has been placed successfully.</p> 
+     
+    <div style="background: #f8f9fa; padding: 15px; border: 1px dashed #ccc; margin: 20px 0;"> 
+        <span style="color: #555;">Order ID:</span> 
+        <strong style="font-family: monospace; font-size: 20px;">{{ order_no }}</strong> 
+    </div> 
+ 
+    <p>We have sent a confirmation to <strong>{{ session['email'] }}</strong>.</p> 
+     
+    <div style="margin-top: 30px;"> 
+        <a href="{{ url_for('user_dashboard') }}"  
+           style="background: #4CAF50; color: white; padding: 12px 25px; text-decoration: none; 
+border-radius: 5px;"> 
+           Continue Shopping 
+        </a> 
+    </div> 
+</div> 
+{% endblock %}

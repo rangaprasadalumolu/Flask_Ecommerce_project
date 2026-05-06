@@ -1,0 +1,25 @@
+{% extends "welcome.html" %}
+{% block content %}
+
+<div style="max-width:400px; margin:auto;" class="card">
+
+<h2 style="text-align:center;">Login</h2>
+
+<p style="color:red;">{{ msg }}</p>
+
+<form method="post">
+    <input type="text" name="user_name" placeholder="Username" style="width: 75%; margin-bottom:10px; height: 40px;">
+    <input type="password" name="user_password" placeholder="Password" style="width: 75%; margin-bottom:10px; height: 40px;">
+    <button class="btn primary" style="width:75%;">Login</button>
+</form>
+
+<p style="text-align:center; margin-top:10px;">OR</p>
+
+<button href="/user_register_form" class="btn success" style="width: 95%; display:block; text-align:center; 
+border-radius:5px; height: 40px;">
+Register
+</button>
+
+</div>
+
+{% endblock %}

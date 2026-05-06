@@ -1,0 +1,33 @@
+{% extends "welcome.html" %}
+
+{% block title %}Admin Login{% endblock %}
+
+{% block content %}
+
+<div style="display:flex; justify-content:center; align-items:center; height:60vh;">
+    
+    <form action="/admin_login" method="post" style="
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        width: 300px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        text-align: center;
+    ">
+        <h2 style="margin-bottom:20px;">Admin Login</h2>
+
+        <label>Admin Name</label><br>
+        <input type="text" name="admin_name" required 
+               style="width:90%; padding:8px; margin:10px 0;"><br>
+
+        <label>Password</label><br>
+        <input type="password" name="admin_password" required 
+               style="width:90%; padding:8px; margin:10px 0;"><br>
+
+        <button type="submit" class="btn admin-btn">Login</button>
+    </form>
+    <p><font color="red">{{note}}</font></p>
+
+</div>
+
+{% endblock %}

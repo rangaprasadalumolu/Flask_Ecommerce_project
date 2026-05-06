@@ -1,0 +1,97 @@
+{% extends "welcome.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+
+<div style="position:absolute; top:20px; right:30px; display:flex; gap:10px; align-items:center;">
+
+    <form action="{{ url_for('add_details') }}" method="get">
+        <button type="submit"
+            style="background:rgb(60, 227, 19); color:white; padding:8px 15px; border:none; border-radius:5px;">
+            Add Product
+        </button>
+    </form>
+
+    <form action="{{ url_for('logout') }}" method="post">
+        <button type="submit"
+            style="background:red; color:white; padding:8px 15px; border:none; border-radius:5px;">
+            Logout
+        </button>
+    </form>
+
+</div>
+
+<h2>Hello {{ name }}</h2>
+
+<!-- 🔥 PRODUCT GRID -->
+<div class="grid-container">
+
+    {% for p in products %}
+    <div class="card">
+        <a href="{{ url_for('product_page', product_id=p.id) }}">
+        <img src="{{ url_for('static', filename=p.image) }}">
+        <h3>{{ p.name }}</h3>
+        <p>₹ {{ p.price }}</p>
+        <p>{{ p.category }}</p>
+        </a>
+             <!-- UPDATE BUTTON --> 
+    <form action="{{ url_for('update_product_form', product_id=p.id) }}" method="get"> 
+        <button style="margin-top:10px; background:orange; color:white;
+         padding:5px 10px; border:none;  border-radius:5px;"> 
+            Update 
+        </button> </form>
+
+<!-- DELETE BUTTON -->
+<form action="{{ url_for('delete_product', product_id=p.id) }}" method="post">
+    <button style="margin-top:10px; background:rgb(190, 222, 34); color:white;
+     padding:5px 10px; border:none; border-radius:5px;">
+        Delete
+    </button>
+</form>
+
+    </div>
+    {% endfor %}
+
+</div>
+
+<style>
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    background-color: rgb(66, 177, 158);
+}
+
+.card {
+    background: rgb(203, 232, 230);
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card img {
+    width: 100%;
+    height: 180px;
+    object-fit: contain;
+}
+
+
+.card a {
+    text-decoration: none;
+    color: black;
+}
+
+.card a:visited {
+    color: black;
+}
+</style>
+
+{% endblock %}

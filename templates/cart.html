@@ -1,0 +1,166 @@
+{% extends "welcome.html" %}
+
+{% block title %}Cart{% endblock %}
+
+{% block content %}
+
+<style>
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+}
+
+.cart-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.cart-table th {
+    background: #343a40;
+    color: white;
+    padding: 12px;
+}
+
+.cart-table td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.cart-table tr:hover {
+    background-color: #f9f9f9;
+}
+
+.product-img {
+    width: 70px;
+    border-radius: 8px;
+}
+
+.remove-btn {
+    color: white;
+    background: #dc3545;
+    padding: 6px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.total-box {
+    text-align: right;
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.actions {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.btn {
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    color: white;
+    margin: 5px;
+    display: inline-block;
+}
+
+.checkout {
+    background: #28a745;
+}
+
+.continue {
+    background: #007bff;
+}
+
+.empty {
+    background: #f64764;
+}
+
+.empty-cart {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 50px;
+    color: #777;
+}
+</style>
+
+<div class="container">
+
+<h2 class="cart-title">🛒 Your Cart</h2>
+
+{% if cart_items %}
+
+<table class="cart-table">
+    <tr>
+        <th>Product</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Qty</th>
+        <th>Total</th>
+        <th>Action</th>
+    </tr>
+
+    {% for item in cart_items %}
+    <tr>
+        <td>
+            <img src="{{ url_for('static', filename=item.image) }}" class="product-img">
+        </td>
+        <td>{{ item.name }}</td>
+        <td>₹{{ item.price }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>₹{{ item.total }}</td>
+        <td>
+            <a href="{{ url_for('remove_from_cart', product_id=item.id) }}" class="remove-btn">
+                Remove
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<div class="total-box">
+    Total: ₹{{ total_price }}
+</div>
+
+<div class="actions">
+
+    <form action="{{ url_for('address') }}" method="GET" style="display:inline;">
+        <button type="submit" class="btn checkout">
+            Proceed to Checkout (₹{{ total_price }})
+        </button>
+    </form>
+
+    <a href="{{ url_for('user_dashboard') }}" class="btn continue">
+        ⬅ Continue Shopping
+    </a>
+
+    <a href="{{ url_for('empty_cart') }}" class="btn empty">
+        🗑 Empty Cart
+    </a>
+
+</div>
+
+{% else %}
+
+<div class="empty-cart">
+    <p>🛒 Your cart is empty</p>
+    <a href="{{ url_for('user_dashboard') }}" class="btn continue">
+        Start Shopping
+    </a>
+</div>
+
+{% endif %}
+
+</div>
+
+{% endblock %}

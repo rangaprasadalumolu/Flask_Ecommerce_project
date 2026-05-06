@@ -1,0 +1,47 @@
+{% extends "welcome.html" %}
+
+{% block title %}User Login{% endblock %}
+
+{% block content %}
+
+<div style="display:flex; justify-content:center; align-items:center; height:70vh;">
+
+    <div style="
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        width: 320px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        text-align: center;
+    ">
+
+        <h2>User Login</h2>
+
+<p style="color:red;">{{ msg }}</p>
+<p style="color:rgb(3, 145, 7);">{{ msg1 }}</p>
+
+        <form  action="{{ url_for('user_login') }}" method="post">
+            <label>User Name</label><br>
+            <input type="text" name="user_name" required
+                   style="width:90%; padding:8px; margin:10px 0;"><br>
+
+            <label>Password</label><br>
+            <input type="password" name="user_password" required
+                   style="width:90%; padding:8px; margin:10px 0;"><br>
+
+            <button type="submit" class="btn user-btn">Login</button>
+        </form>
+
+        <p style="margin:15px 0;">---------------- OR ----------------</p>
+
+        <form action="/user_register_form" method="get">
+            <button type="submit" class="btn" style="background-color:#1976d2; color:white;">
+                Sign Up
+            </button>
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}
