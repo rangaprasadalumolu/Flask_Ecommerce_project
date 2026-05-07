@@ -374,32 +374,58 @@ def logout():
 
 @ecom.route("/user_register_form", methods=["GET", "POST"])
 def user_register_form():
-   return redirect(url_for("user_register"))
+    return redirect(url_for("user_register"))
 
 @ecom.route("/user_register", methods=["GET", "POST"])
 def user_register():
-      if "name" in session:
-        return redirect(url_for("admin_dashboard"))
-      elif "profile_name"  in session:
-         return redirect(url_for("user_dashboard"))
-      
-      if request.method=="POST":
-          user=request.form["u_n"]
-          pin=request.form["pn"]
-          profile_name=request.form["pf_n"]
-          email=request.form["eml"]
-          cursor.execute("select user from user_data where user=?;",(user,))
-          if cursor.fetchall():
-             return render_template("user_register.html",msg="*username already exists plz try with other")
-          else:
-             cursor.execute("select email from user_data where email=?;",(email,))
-             if cursor.fetchall():
-                return render_template("user_register.html",msg="*email already exists plz try with other")
-             else:
-                cursor.execute("insert into user_data(user,pin,profile_name,email) values(?,?,?,?);",(user,pin,profile_name,email))
-                connect_db.commit()
-                return render_template("user_form.html",msg1="*user registered successfully plz login now ")
-      return render_template("user_register.html")
+
+    # 🔥 clear old session before register
+    session.clear()
+
+    if request.method == "POST":
+
+        user = request.form["u_n"]
+        pin = request.form["pn"]
+        profile_name = request.form["pf_n"]
+        email = request.form["eml"]
+
+        cursor.execute(
+            "SELECT user FROM user_data WHERE user=?",
+            (user,)
+        )
+
+        if cursor.fetchall():
+
+            return render_template(
+                "user_register.html",
+                msg="Username already exists"
+            )
+
+        cursor.execute(
+            "SELECT email FROM user_data WHERE email=?",
+            (email,)
+        )
+
+        if cursor.fetchall():
+
+            return render_template(
+                "user_register.html",
+                msg="Email already exists"
+            )
+
+        cursor.execute(
+            "INSERT INTO user_data(user,pin,profile_name,email) VALUES(?,?,?,?)",
+            (user, pin, profile_name, email)
+        )
+
+        connect_db.commit()
+
+        return render_template(
+            "user_form.html",
+            msg1="Registration successful. Please login."
+        )
+
+    return render_template("user_register.html")
 
 
    

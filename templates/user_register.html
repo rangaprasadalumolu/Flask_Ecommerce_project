@@ -1,24 +1,74 @@
 {% extends "welcome.html" %}
+
+{% block title %}Register{% endblock %}
+
 {% block content %}
 
-<div style="max-width:400px; margin:auto;" class="card">
+<div style="display:flex; justify-content:center; align-items:center; height:80vh;">
 
-<h2 style="text-align:center;">Login</h2>
+    <div style="
+        background:white;
+        padding:30px;
+        width:350px;
+        border-radius:10px;
+        box-shadow:0 0 10px rgba(0,0,0,0.2);
+        text-align:center;
+    ">
 
-<p style="color:red;">{{ msg }}</p>
+        <h2>User Register</h2>
 
-<form method="post">
-    <input type="text" name="user_name" placeholder="Username" style="width: 75%; margin-bottom:10px; height: 40px;">
-    <input type="password" name="user_password" placeholder="Password" style="width: 75%; margin-bottom:10px; height: 40px;">
-    <button class="btn primary" style="width:75%;">Login</button>
-</form>
+        <p style="color:red;">{{ msg }}</p>
 
-<p style="text-align:center; margin-top:10px;">OR</p>
+        <form action="{{ url_for('user_register') }}" method="POST">
 
-<button href="/user_register_form" class="btn success" style="width: 95%; display:block; text-align:center; 
-border-radius:5px; height: 40px;">
-Register
-</button>
+            <input type="text"
+                   name="u_n"
+                   placeholder="Enter Username"
+                   required
+                   style="width:90%; padding:10px; margin:10px 0;">
+
+            <input type="password"
+                   name="pn"
+                   placeholder="Enter Password"
+                   required
+                   style="width:90%; padding:10px; margin:10px 0;">
+
+            <input type="text"
+                   name="pf_n"
+                   placeholder="Enter Profile Name"
+                   required
+                   style="width:90%; padding:10px; margin:10px 0;">
+
+            <input type="email"
+                   name="eml"
+                   placeholder="Enter Email"
+                   required
+                   style="width:90%; padding:10px; margin:10px 0;">
+
+            <button type="submit"
+                    style="
+                    width:95%;
+                    padding:10px;
+                    background:#1976d2;
+                    color:white;
+                    border:none;
+                    border-radius:5px;
+                    cursor:pointer;">
+                Register
+            </button>
+
+        </form>
+
+        <br>
+
+        <a href="{{ url_for('user_login') }}"
+           style="
+           text-decoration:none;
+           color:#1976d2;">
+           Already have account? Login
+        </a>
+
+    </div>
 
 </div>
 
