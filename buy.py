@@ -402,4 +402,4 @@ def payment_success():
 # ---------------- RUN ----------------
 if __name__ == "__main__":
 
-    ecom.run(host="0.0.0.0", port=5000)
+    ecom.run(debug=True, port=5000)
