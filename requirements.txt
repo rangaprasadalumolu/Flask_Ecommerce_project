@@ -1,0 +1,6 @@
+Flask
+flask-bcrypt
+flask-mail
+razorpay
+gunicorn
+werkzeug

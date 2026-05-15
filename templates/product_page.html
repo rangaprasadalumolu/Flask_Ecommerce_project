@@ -1,29 +1,305 @@
 {% extends "welcome.html" %}
+
+{% block title %}
+{{ product.product }}
+{% endblock %}
+
 {% block content %}
 
-<div style="display:flex; gap:40px;">
+<div class="container">
 
-<div style="width:40%;">
-    <img id="mainImage" src="{{ url_for('static', filename=images[0]) }}" style="width:100%; border-radius:10px;">
+    <!-- LEFT SIDE : PRODUCT IMAGES -->
+    <div class="left">
+
+        {% if images %}
+            <img
+                id="mainImage"
+                class="main-img"
+                src="{{ url_for('static', filename=images[0]) }}"
+                alt="{{ product.product }}"
+            >
+        {% else %}
+            <p>No Image Available</p>
+        {% endif %}
+
+        <!-- Thumbnail Images -->
+        <div class="thumbs">
+            {% for img in images %}
+                <img
+                    src="{{ url_for('static', filename=img) }}"
+                    alt="Product Image"
+                    onmouseover="changeImage(this)"
+                >
+            {% endfor %}
+        </div>
+
+    </div>
+
+    <!-- RIGHT SIDE : PRODUCT DETAILS -->
+    <div class="right">
+
+        <h2>{{ product.product }}</h2>
+
+        <!-- Price -->
+        <div class="price-section">
+            <span class="price">₹{{ product.price }}</span>
+        </div>
+
+        <!-- Description -->
+        <p class="desc">
+            {{ product.product_details }}
+        </p>
+
+        <!-- Buttons -->
+        <div class="buttons">
+
+            <!-- Add To Cart -->
+            <form action="{{ url_for('add_to_cart') }}" method="POST">
+
+                <input
+                    type="hidden"
+                    name="product_id"
+                    value="{{ product.product_id }}"
+                >
+
+                <button type="submit" class="cart-btn">
+                    Add to Cart
+                </button>
+
+            </form>
+
+            <!-- Buy Now -->
+            <form
+                action="{{ url_for('address') }}"
+                method="GET"
+                style="display:inline;"
+            >
+
+                <input
+                    type="hidden"
+                    name="product_id"
+                    value="{{ product.product_id }}"
+                >
+
+                <button type="submit" class="buy-btn">
+                    Buy Now
+                </button>
+
+            </form>
+
+        </div>
+
+        <!-- Back Button -->
+        <div class="back-btn-container">
+
+            <a href="{{ url_for('user_dashboard') }}" class="back-btn">
+                ⬅ Back to Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
 </div>
 
-<div style="width:60%;">
-    <h2>{{ product.product }}</h2>
-    <h3 style="color:green;">₹{{ product.price }}</h3>
+<!-- CSS -->
+<style>
 
-    <p>{{ product.product_details }}</p>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-    <form action="{{ url_for('add_to_cart') }}" method="POST">
-        <input type="hidden" name="product_id" value="{{ product.product_id }}">
-        <button class="btn warning">Add to Cart</button>
-    </form>
+body{
+    background:#f5f5f5;
+    font-family:Arial, sans-serif;
+}
 
-    <form action="{{ url_for('address') }}" method="GET" style="margin-top:10px;">
-        <input type="hidden" name="product_id" value="{{ product.product_id }}">
-        <button class="btn success">Buy Now</button>
-    </form>
-</div>
+.container{
+    display:flex;
+    gap:50px;
+    padding:40px;
+    background:white;
+    margin:30px auto;
+    width:90%;
+    border-radius:15px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.1);
+}
 
-</div>
+/* LEFT SIDE */
+.left{
+    width:40%;
+}
+
+.main-img{
+    width:100%;
+    height:420px;
+    object-fit:contain;
+    background:white;
+    border-radius:15px;
+    border:1px solid #ddd;
+    padding:10px;
+}
+
+.thumbs{
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+    flex-wrap:wrap;
+}
+
+.thumbs img{
+    width:75px;
+    height:75px;
+    object-fit:contain;
+    border:1px solid #ccc;
+    border-radius:8px;
+    padding:5px;
+    background:white;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.thumbs img:hover{
+    transform:scale(1.05);
+    border-color:orange;
+}
+
+/* RIGHT SIDE */
+.right{
+    width:60%;
+}
+
+.right h2{
+    font-size:32px;
+    margin-bottom:15px;
+    color:#222;
+}
+
+.price-section{
+    margin-bottom:20px;
+}
+
+.price{
+    font-size:30px;
+    font-weight:bold;
+    color:#e65100;
+}
+
+.desc{
+    font-size:17px;
+    line-height:1.7;
+    color:#555;
+    margin-bottom:30px;
+}
+
+/* BUTTONS */
+.buttons{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+button{
+    padding:14px 28px;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+    color:white;
+}
+
+.cart-btn{
+    background:orange;
+}
+
+.buy-btn{
+    background:green;
+}
+
+button:hover{
+    transform:scale(1.05);
+}
+
+button:active{
+    transform:scale(0.98);
+}
+
+.cart-btn:hover{
+    box-shadow:0 0 10px orange;
+}
+
+.buy-btn:hover{
+    box-shadow:0 0 10px limegreen;
+}
+
+/* BACK BUTTON */
+.back-btn-container{
+    margin-top:30px;
+}
+
+.back-btn{
+    text-decoration:none;
+    background:#4CAF50;
+    color:white;
+    padding:12px 22px;
+    border-radius:8px;
+    display:inline-block;
+    transition:0.3s;
+}
+
+.back-btn:hover{
+    background:#388e3c;
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width:768px){
+
+    .container{
+        flex-direction:column;
+        padding:20px;
+    }
+
+    .left,
+    .right{
+        width:100%;
+    }
+
+    .main-img{
+        height:300px;
+    }
+
+    .right h2{
+        font-size:26px;
+    }
+
+    .price{
+        font-size:26px;
+    }
+
+    .buttons{
+        flex-direction:column;
+    }
+
+    button{
+        width:100%;
+    }
+
+}
+
+</style>
+
+<!-- JavaScript -->
+<script>
+
+function changeImage(element){
+
+    document.getElementById("mainImage").src = element.src;
+
+}
+
+</script>
 
 {% endblock %}
