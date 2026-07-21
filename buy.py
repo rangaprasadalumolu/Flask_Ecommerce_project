@@ -10,6 +10,10 @@ import random
 import string
 import datetime
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 from flask_mail import Mail, Message 
 
@@ -85,12 +89,13 @@ def tables():
 
 
 
-ecom.config['MAIL_SERVER'] = 'smtp.gmail.com' 
-ecom.config['MAIL_PORT'] = 587 
-ecom.config['MAIL_USE_TLS'] = True 
-ecom.config['MAIL_USERNAME'] = 'MAIL_USERNAME'  # Your email address
-ecom.config['MAIL_PASSWORD'] = "MAIL_PASSWORD"  # Not your login password 
-ecom.config['MAIL_DEFAULT_SENDER'] = 'MAIL_USERNAME'  # Default sender email address
+ecom.config['MAIL_SERVER'] = 'smtp.gmail.com'
+ecom.config['MAIL_PORT'] = 587
+ecom.config['MAIL_USE_TLS'] = True
+
+ecom.config['MAIL_USERNAME'] = os.getenv("MAIL_USERNAME")
+ecom.config['MAIL_PASSWORD'] = os.getenv("MAIL_PASSWORD")
+ecom.config['MAIL_DEFAULT_SENDER'] = os.getenv("MAIL_USERNAME")
  
 mail = Mail(ecom) 
 
@@ -773,7 +778,7 @@ def checkout():
         "payment.html",
         order_id=razorpay_order["id"],
         amount=amount_in_paise,
-        key_id="RAZORPAY_KEY",  # 🔥 replace with your real key
+        key_id=os.getenv("RAZORPAY_KEY"),  # 🔥 replace with your real key
         user_email=session.get("email"),
         name=session.get("profile_name")
     )
